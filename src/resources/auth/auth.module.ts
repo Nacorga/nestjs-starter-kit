@@ -5,17 +5,18 @@ import { AuthController } from './auth.controller';
 import { JwtStrategy } from './jwt.strategy';
 import { UsersModule } from '../users/users.module';
 import { JwtModule, JwtModuleAsyncOptions } from '@nestjs/jwt';
-import { AppService } from '@/app.service';
+import { ConfigService } from '@nestjs/config';
+import { ENV } from '@/constants/env.constants';
 
 const passportOpts: IAuthModuleOptions = {
   defaultStrategy: 'jwt',
 };
 
 const jwtOpts: JwtModuleAsyncOptions = {
-  extraProviders: [AppService],
-  inject: [AppService],
-  useFactory: async (appSrv: AppService) => ({
-    secret: appSrv.JWT_SECRET,
+  extraProviders: [ConfigService],
+  inject: [ConfigService],
+  useFactory: async (config: ConfigService) => ({
+    secret: config.get<string>(ENV.JWT_SECRET),
     signOptions: { expiresIn: '1d' },
   }),
 };
