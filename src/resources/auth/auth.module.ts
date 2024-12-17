@@ -7,6 +7,8 @@ import { UsersModule } from '../users/users.module';
 import { JwtModule, JwtModuleAsyncOptions } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { ENV } from '@/constants/env.constants';
+import { GoogleModule } from '@/lib/google/google.module';
+import { UtilsModule } from '@/lib/utils/utils.module';
 
 const passportOpts: IAuthModuleOptions = {
   defaultStrategy: 'jwt',
@@ -22,7 +24,13 @@ const jwtOpts: JwtModuleAsyncOptions = {
 };
 
 @Module({
-  imports: [UsersModule, PassportModule.register(passportOpts), JwtModule.registerAsync(jwtOpts)],
+  imports: [
+    PassportModule.register(passportOpts),
+    JwtModule.registerAsync(jwtOpts),
+    UsersModule,
+    GoogleModule,
+    UtilsModule,
+  ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],
 })

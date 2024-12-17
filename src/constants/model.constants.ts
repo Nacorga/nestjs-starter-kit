@@ -1,5 +1,3 @@
 export enum MODEL {
-  USER = 'USER_MODEL',
-  LANDING = 'LANDING_MODEL',
-  LEAD = 'LEAD_MODEL',
+  USER = 'USER',
 }
